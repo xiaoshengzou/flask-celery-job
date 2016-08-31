@@ -1,9 +1,7 @@
 #!usr/bin/env python
 import os
 from app import celery, create_app
-
 '''
-
 The only remaining task is to launch a Celery worker.
 This process needs to have its own Flask application instance that can be used to create the
 context necessary for the Flask background tasks to run. For this I used a separate starter script,

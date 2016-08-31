@@ -1,13 +1,12 @@
 from . import main
 from flask import render_template, request, url_for, redirect, flash
 from flask import jsonify
-from ..tasks.job_run_task import mysqlTomongoDB
+from ..tasks.job import mysqlTomongoDB
 from .forms import ConfigForm
 from ..job.jobconfig import JobConfig
 from ..models import JobInfo
 from .. import db
 import json
-from flask import current_app
 
 @main.route('/', methods=['GET', 'POST'])
 def index():
@@ -57,6 +56,7 @@ def run():
         db.session.add(job)
         db.session.commit()
     except Exception, e:
+        print '%s'  % e
         raise e
 
     return jsonify({}), 202, {'Location': url_for('main.taskstatus',task_id=task.id)}

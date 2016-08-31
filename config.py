@@ -11,7 +11,6 @@ class Config:
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'data.sqlite')
     SQLALCHEM_COMMIT_ON_TEARDOWN = True
     SQLALCHEMY_TRACK_MODIFICATIONS = True
-    CELERY_ALWAYS_EAGER = True
 
     @staticmethod
     def init_app(app):

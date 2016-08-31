@@ -6,6 +6,7 @@ from flask_script import Manager, Shell
 from app import db
 from app.models import JobInfo
 
+
 app = create_app(os.getenv('FLASK_CONFIG') or 'default')
 manager = Manager(app)
 
@@ -22,10 +23,6 @@ def deploy():
 
     db.drop_all()
     db.create_all()
-    # create user roles
-    # with app.app_context():
-    #     db.drop_all()
-    #     db.create_all()
 
 
 

@@ -5,6 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from celery import Celery
 from config import config, Config
 
+
 bootstrap = Bootstrap()
 db = SQLAlchemy()
 
@@ -26,3 +27,4 @@ def create_app(config_name):
     app.register_blueprint(main_blueprint)
 
     return app
+
