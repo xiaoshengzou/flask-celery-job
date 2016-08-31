@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+        <h2>任务列表</h2>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>编号</th>
+                        <th>任务名称</th>
+                        <th>ID</th>
+                        <th>任务类型</th>
+                        <th>源数据类型</th>
+                        <th>源数据名称</th>
+                        <th>任务结果</th>
+                        <th>运行次数</th>
+                        <th>操作</th>
+                        <th>更多</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for job in jobs %}
+                    <tr id="job_{{job.id}}">
+                        <td>{{ job.id }}</td>
+                        <td>{{ job.name }}</td>
+                        <td>{{ job.job_id}}</td>
+                        <td>{{ job.job_type }}</td>
+                        <td>{{ job.plugin }}</td>
+                        <td>{{ job.plugin_name }}</td>
+                        <td>{{ job.result }}</td>
+                        <td>{{ job.job_dones }}</td>
+                        <td><button id="job{{job.id}}" type="button" class="btn-xs btn-info btn-danger"
+                                      data-toggle="modal" data-target="#myModal{{job.id}}">删除</button>
+                        </td>
+                        <td><a href="{{ url_for('main.job', id=job.id )}}">详细</a></td>
+                    </tr>
+                    <!-- delete job modal -->
+                    <div class="modal fade" id="myModal{{job.id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title" id="myModalLabel">警告</h4>
+                                </div>
+                                <div class="modal-body">是否确认删除该任务？</div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="del_job({{job.id}});">删除</button>
+                                </div>
+                            </div><!-- /.modal-content -->
+                        </div><!-- /.modal -->
+                    </div>
+                    <!-- end delete job modal -->
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+  function del_job(jobid) {
+    $.post("{{url_for('main.del_job')}}", {'id':jobid}, function(resp){
+      if(resp == 'ok'){
+        $('#job_' + jobid).remove();
+      }else{
+        alert("delete fail!");
+      }
+    });
+  }
+</script>
+{% endblock %}
